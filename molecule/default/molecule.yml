@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  ansible-lint .
+  yamllint .
+platforms:
+  - name: ubuntu
+    image: ubuntu_sistem:latest
+    command: /lib/systemd/systemd
+    pre_build_image: true
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - name: oraclelinux8
+    image: oraclelinux_sistem:latest
+    command: /usr/sbin/init
+    pre_build_image: true
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw

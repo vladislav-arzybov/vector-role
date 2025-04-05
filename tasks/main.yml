@@ -1,7 +1,7 @@
 ---
 # tasks file for vector-role
 - name: VECTOR | Create dir
-  become: true
+#  become: true
   ansible.builtin.file:
     path: "/vector/"
     state: directory
@@ -9,25 +9,25 @@
     owner: root
     group: root
 - name: VECTOR | Get vector distrib
-  become: true
+#  become: true
   ansible.builtin.get_url:
     url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-x86_64-unknown-linux-gnu.tar.gz"
     dest: "/vector/vector-{{ vector_version }}.tar.gz"
 - name: VECTOR | Unarchive vector
-  become: true
+#  become: true
   unarchive:
     src: "/vector/vector-{{ vector_version }}.tar.gz"
     dest: "/vector/"
     remote_src: true
 - name: VECTOR | Copy bin file vector
-  become: true
+#  become: true
   copy:
     src: "/vector/vector-x86_64-unknown-linux-gnu/bin/vector"
     dest: "/usr/bin/vector"
     mode: 0755
     remote_src: true
 - name: VECTOR | Copy systemd service vector
-  become: true
+#  become: true
   copy:
     src: "/vector/vector-x86_64-unknown-linux-gnu/etc/systemd/vector.service"
     dest: "/lib/systemd/system"
@@ -36,28 +36,28 @@
     owner: root
     group: root
 - name: VECTOR | Create user vector
-  become: true
+#  become: true
   ansible.builtin.user:
     name: "vector"
 - name: VECTOR | Create vector catalog
-  become: true
+#  become: true
   ansible.builtin.file:
     path: "/var/lib/vector"
     state: directory
     mode: 0755
     owner: "vector"
     group: "vector"
-- name: VECTOR | Create default vector config catalog and vector.toml
-  become: true
+- name: VECTOR | Create vector config dir
+#  become: true
   ansible.builtin.copy:
     remote_src: true
-    src: "/vector/vector-x86_64-unknown-linux-gnu/config/vector.toml"
+    src: "/vector/vector-x86_64-unknown-linux-gnu/README.md"
     dest: "/etc/vector/"
     mode: 0644
     owner: root
     group: root
 - name: VECTOR | Config vector j2 template
-  become: true
+#  become: true
   template:
     src: "./templates/vector.toml.j2"
     dest: "/etc/vector/vector.toml"

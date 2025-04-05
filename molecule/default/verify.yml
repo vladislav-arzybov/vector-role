@@ -1,0 +1,20 @@
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Ansible check file exists.
+    stat:
+      path: "/etc/vector/vector.toml"
+    register: file_status
+  - debug:
+      msg: "File exists."
+    when: file_status.stat.exists
+  - debug:
+      msg: "ERROR: File not found!"
+    when: file_status.stat.exists == False
+  - name: Get Service Status
+    ansible.builtin.service:
+      name: vector.service
+    register: service_status
+  - debug:
+      var: service_status.status.ActiveState
