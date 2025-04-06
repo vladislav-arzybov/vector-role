@@ -1,0 +1,14 @@
+---
+driver:
+  name: podman
+platforms:
+  - name: instance
+#    image: localhost/ubuntu_podman:latest
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+scenario:
+  test_sequence:
+    - destroy
+    - create
+    - converge
+    - destroy

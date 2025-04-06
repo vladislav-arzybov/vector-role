@@ -64,4 +64,4 @@
     mode: 0644
     owner: root
     group: root
-  notify: Start vector service
+#  notify: Start vector service
